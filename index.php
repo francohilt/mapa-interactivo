@@ -4,8 +4,13 @@
     <title>Mapa de Regiones Geográficas de Argentina</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         #map {
-            height: 500px;
+            height: 100%;
             width: 100%;
         }
     </style>
@@ -50,4 +55,3 @@
     </script>
 </body>
 </html>
-
