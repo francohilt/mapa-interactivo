@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Mapa de Regiones Geográficas de Argentina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         body, html {
@@ -15,8 +16,6 @@
         }
         .legend {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
             background-color: white;
             padding: 10px;
             border-radius: 5px;
@@ -34,10 +33,28 @@
             height: 20px;
             margin-right: 5px;
         }
+
+        /* CSS para dispositivos móviles */
+        @media only screen and (max-width: 600px) {
+            .legend {
+               
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+            }
+        }
+
+        /* CSS para dispositivos de escritorio */
+        @media only screen and (min-width: 601px) {
+            .legend {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Mapa de Regiones Geográficas de Argentina</h1>
+    <!-- <h1>Mapa de Regiones Geográficas de Argentina</h1> -->
     <div id="map"></div>
     <div id="coordinates"></div>
     <div id="legend" class="legend"></div>
@@ -109,10 +126,10 @@
                 var region = regions[i];
                 var polygon = L.polygon(region.coordinates, {color: 'black', fillColor: region.color, fillOpacity: 0.4 }).addTo(map);
                 polygon.bindPopup('<strong>' + region.name + '</strong><br><a href="' + region.link + '">Más información</a>');
-                polygon.on('click', function (event) {
-                    var latLng = event.latlng;
-                    document.getElementById('coordinates').innerHTML = 'Latitud: ' + latLng.lat.toFixed(4) + ', Longitud: ' + latLng.lng.toFixed(4);
-                });
+                // polygon.on('click', function (event) {
+                //     var latLng = event.latlng;
+                //     document.getElementById('coordinates').innerHTML = 'Latitud: ' + latLng.lat.toFixed(4) + ', Longitud: ' + latLng.lng.toFixed(4);
+                // });
             }
             var legend = L.control({ position: 'bottomright' });
             legend.onAdd = function (map) {
