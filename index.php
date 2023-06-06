@@ -13,12 +13,34 @@
             height: 100%;
             width: 100%;
         }
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Mapa de Regiones Geográficas de Argentina</h1>
     <div id="map"></div>
     <div id="coordinates"></div>
+    <div id="legend" class="legend"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         function initMap() {
@@ -28,20 +50,6 @@
                 maxZoom: 18
             }).addTo(map);
             var regions = [
-                //  { name: 'Argentina', coordinates: [
-                //     // Punto 1: Extremo noroeste
-                //     [-21.7812, -73.9502],
-
-                //     // Punto 2: Extremo noreste
-                //     [-21.7812, -53.9648],
-
-                //     // Punto 3: Extremo sureste
-                //     [-54.8860, -53.9648],
-
-                //     // Punto 4: Extremo suroeste
-                //     [-54.8860, -73.9502]],
-                //     color: 'green', link: 'https://example.com/patagonia' },
-
                 { name: 'Patagonia', coordinates: [
                     [-38.0, -72.0], 
                     [-38.0, -68.0], 
@@ -57,7 +65,7 @@
                     [-38.0, -68.0], 
                     [-27.0, -68.0], 
                     [-27.0, -71.0], 
-                ], color: 'rgba(102, 0, 0, 0.8)', link: 'https://example.com/cuyo' },
+                ], color: 'rgba(255, 215, 0, 0.8)', link: 'https://example.com/cuyo' },
                 
                 { name: 'Sierras Pampeanas', coordinates: [  
                     [-34.0, -68.0], 
@@ -89,7 +97,6 @@
                     [-21.7, -63.8],
                 ], color: 'rgba(255, 102, 153, 0.8)', link: 'https://example.com/llanuraSubtropical' },
 
-
                 { name: 'Meseta Subtropical', coordinates: [  
                     [-29.8, -57.0], 
                     [-29.8, -53.0], 
@@ -102,12 +109,23 @@
                 var region = regions[i];
                 var polygon = L.polygon(region.coordinates, {color: 'black', fillColor: region.color, fillOpacity: 0.4 }).addTo(map);
                 polygon.bindPopup('<strong>' + region.name + '</strong><br><a href="' + region.link + '">Más información</a>');
-
                 polygon.on('click', function (event) {
                     var latLng = event.latlng;
                     document.getElementById('coordinates').innerHTML = 'Latitud: ' + latLng.lat.toFixed(4) + ', Longitud: ' + latLng.lng.toFixed(4);
                 });
             }
+            var legend = L.control({ position: 'bottomright' });
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'legend');
+                var labels = [];
+                labels.push('<strong>Regiones Geográficas</strong>');
+                for (var i = 0; i < regions.length; i++) {
+                    labels.push('<div class="legend-item"><span class="legend-color" style="background-color:' + regions[i].color + '"></span>' + regions[i].name + '</div>');
+                }
+                div.innerHTML = labels.join('');
+                return div;
+            };
+            legend.addTo(map);
         }
     </script>
     <script>
