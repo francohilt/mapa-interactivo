@@ -28,7 +28,7 @@
                 maxZoom: 18
             }).addTo(map);
             var regions = [
-                 // { name: 'Argentina', coordinates: [
+                //  { name: 'Argentina', coordinates: [
                 //     // Punto 1: Extremo noroeste
                 //     [-21.7812, -73.9502],
 
@@ -89,10 +89,18 @@
                     [-21.7, -63.8],
                 ], color: 'rgba(255, 102, 153, 0.8)', link: 'https://example.com/llanuraSubtropical' },
 
+
+                { name: 'Meseta Subtropical', coordinates: [  
+                    [-29.8, -57.0], 
+                    [-29.8, -53.0], 
+                    [-25.3, -53.0], 
+                    [-25.3, -57.0],
+
+                ], color:'rgba(0, 100, 0, 0.8)', link: 'https://example.com/mesestaSubtropical' },
             ];
             for (var i = 0; i < regions.length; i++) {
                 var region = regions[i];
-                var polygon = L.polygon(region.coordinates, {color: 'black', fillColor: region.color, fillOpacity: 0.6 }).addTo(map);
+                var polygon = L.polygon(region.coordinates, {color: 'black', fillColor: region.color, fillOpacity: 0.4 }).addTo(map);
                 polygon.bindPopup('<strong>' + region.name + '</strong><br><a href="' + region.link + '">Más información</a>');
 
                 polygon.on('click', function (event) {
